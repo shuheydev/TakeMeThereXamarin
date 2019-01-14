@@ -8,7 +8,7 @@
 
 
     <StackLayout Spacing="10" Padding="10" Orientation="Vertical">
-        <StackLayout HeightRequest="100" BackgroundColor="{Binding TileColor}" Spacing="0" Padding="0">
+        <StackLayout HeightRequest="100" BackgroundColor="Red" Spacing="0" Padding="0">
             <Label Text="Destination" FontSize="20"/>
             <Label Text="Target Name" FontSize="40" HorizontalTextAlignment="Center"/>
         </StackLayout>

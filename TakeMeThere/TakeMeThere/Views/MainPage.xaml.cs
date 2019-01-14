@@ -14,7 +14,7 @@ namespace TakeMeThere.Views
 {
     public partial class MainPage : ContentPage
     {
-        private readonly double cycleTime = 1000;
+        private readonly double cycleTime = 2000;
         private Stopwatch stopwatch = new Stopwatch();
         private bool pageIsActive;
         private float t;
@@ -37,7 +37,7 @@ namespace TakeMeThere.Views
 
             Device.StartTimer(TimeSpan.FromMilliseconds(33), () =>
                 {
-                    t = (float)(stopwatch.Elapsed.TotalMilliseconds % cycleTime / cycleTime);
+                    t = (float)(stopwatch.Elapsed.TotalMilliseconds % cycleTime / (cycleTime));
 
                     skCanvasViewTargetDirection.InvalidateSurface();
 
@@ -82,11 +82,11 @@ namespace TakeMeThere.Views
 
                 //canvas.DrawCircle(0, -90, 9, strokePaint);
 
-                for (int circle = 1; circle < 5; circle++)
+                for (int circle = 0; circle < 1; circle++)
                 {
                     float radius = 9*(circle+t);
 
-                    strokePaint.Color=new SKColor(0x7c,0xfc,0x00,(byte)(255*(circle==4?(1-t):1)));
+                    strokePaint.Color=new SKColor(0x7c,0xfc,0x00,(byte)(255*(circle==0?(1-t):1)));
 
                     canvas.DrawCircle(0,-90,radius,strokePaint);
                 }
