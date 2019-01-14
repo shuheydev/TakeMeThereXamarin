@@ -17,13 +17,17 @@
             <StackLayout Orientation="Vertical" Spacing="10" WidthRequest="200">
                 <StackLayout HeightRequest="100" BackgroundColor="Red" Spacing="0" Padding="0">
                     <Label Text="Direct Distance" FontSize="20"/>
+                    <Label Text="421 m" FontSize="40" HorizontalTextAlignment="End"/>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HeightRequest="100" Spacing="10">
-                    <StackLayout WidthRequest="100" BackgroundColor="Red" Spacing="10">
-                        <Label Text="GPS" FontSize="20"/>
+                <StackLayout  HeightRequest="100" BackgroundColor="Red" Spacing="0" Padding="0">
+                    <Label Text="Coordinate" FontSize="20"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Longitude:" FontSize="15"/>
+                        <Label Text="139.5178194" FontSize="15" HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
-                    <StackLayout WidthRequest="100" BackgroundColor="Red" Spacing="10">
-                        <Label Text="Coordinate" Font="15"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Latitude:" FontSize="15"/>
+                        <Label Text="35.851647" FontSize="15" HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
