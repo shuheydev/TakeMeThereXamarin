@@ -4,8 +4,36 @@
              x:Class="TakeMeThere.Views.MainPage"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+
+    <StackLayout Spacing="10" Padding="10" Orientation="Vertical" BackgroundColor="Aqua">
+        <StackLayout HeightRequest="100" BackgroundColor="Red" Spacing="0" Padding="0">
+            <Label Text="Destination" FontSize="20"/>
+            <Label Text="Target Name" FontSize="40" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+        <Grid VerticalOptions="FillAndExpand" BackgroundColor="Red">
+            <Label Text="Direction" FontSize="20"/>
+        </Grid>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <StackLayout Orientation="Vertical" Spacing="10" WidthRequest="200">
+                <StackLayout HeightRequest="100" BackgroundColor="Red" Spacing="0" Padding="0">
+                    <Label Text="Direct Distance" FontSize="20"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HeightRequest="100" Spacing="10">
+                    <StackLayout WidthRequest="100" BackgroundColor="Red" Spacing="10">
+                        <Label Text="GPS" FontSize="20"/>
+                    </StackLayout>
+                    <StackLayout WidthRequest="100" BackgroundColor="Red" Spacing="10">
+                        <Label Text="Coordinate" Font="15"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout HeightRequest="100" BackgroundColor="Red" HorizontalOptions="FillAndExpand">
+                <Label Text="Expected Required Time" FontSize="15"/>
+                <Label Text="1 hour 10 min" FontSize="40" HorizontalTextAlignment="End"/>
+                <Label Text="Expected Arrival Time" FontSize="15"/>
+                <Label Text="15:25" FontSize="40" HorizontalTextAlignment="End"/>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>
