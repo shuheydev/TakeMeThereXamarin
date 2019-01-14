@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +14,53 @@ namespace TakeMeThere.Views
 {
     public partial class MainPage : ContentPage
     {
+        private readonly double cycleTime = 1000;
+        private Stopwatch stopwatch = new Stopwatch();
+        private bool pageIsActive;
+        private float t;
+
         public MainPage()
         {
             InitializeComponent();
 
             skCanvasViewCompass.PaintSurface += OnCanvasViewCompassPaintSurface;
-            skCanvasViewTargetDirection.PaintSurface += OnCanvasViewTargetDirection;
+            skCanvasViewTargetDirection.PaintSurface += OnCanvasViewTargetDirectionPaintSurface;
+
+
         }
 
-        private void OnCanvasViewTargetDirection(object sender, SKPaintSurfaceEventArgs args)
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            pageIsActive = true;
+            stopwatch.Start();
+
+            Device.StartTimer(TimeSpan.FromMilliseconds(33), () =>
+                {
+                    t = (float)(stopwatch.Elapsed.TotalMilliseconds % cycleTime / cycleTime);
+
+                    skCanvasViewTargetDirection.InvalidateSurface();
+
+                    if (!pageIsActive)
+                        stopwatch.Stop();
+
+                    return pageIsActive;
+                });
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            pageIsActive = false;
+        }
+
+
+        /// <summary>
+        /// 目的地の方角を表示するcanvasの初期設定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnCanvasViewTargetDirectionPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
@@ -41,11 +80,25 @@ namespace TakeMeThere.Views
                 canvas.Scale(Math.Min(info.Width / 200f, info.Height / 200f));
 
 
-                canvas.DrawCircle(0,-90,9,strokePaint);
+                //canvas.DrawCircle(0, -90, 9, strokePaint);
+
+                for (int circle = 1; circle < 5; circle++)
+                {
+                    float radius = 9*(circle+t);
+
+                    strokePaint.Color=new SKColor(0x7c,0xfc,0x00,(byte)(255*(circle==4?(1-t):1)));
+
+                    canvas.DrawCircle(0,-90,radius,strokePaint);
+                }
             }
         }
 
 
+        /// <summary>
+        /// 方位を表示するcanvasの初期設定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCanvasViewCompassPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
@@ -103,7 +156,7 @@ namespace TakeMeThere.Views
 
                         var textWidth = textPaint.MeasureText(directionText, ref textBounds);
 
-                        canvas.DrawText(directionText,-textWidth/2f,yBaseValue-15,textPaint);
+                        canvas.DrawText(directionText, -textWidth / 2f, yBaseValue - 15, textPaint);
                     }
 
                     canvas.DrawLine(0, yBaseValue, 0, yEndPoint, strokePaint);
