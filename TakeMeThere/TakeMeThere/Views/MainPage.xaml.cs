@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
+using Color = System.Drawing.Color;
+
 
 namespace TakeMeThere.Views
 {
@@ -15,11 +17,36 @@ namespace TakeMeThere.Views
         {
             InitializeComponent();
 
-            skCanvasView.PaintSurface += OnCanvasViewPaintSurface;
+            skCanvasViewCompass.PaintSurface += OnCanvasViewCompassPaintSurface;
+            skCanvasViewTargetDirection.PaintSurface += OnCanvasViewTargetDirection;
+        }
+
+        private void OnCanvasViewTargetDirection(object sender, SKPaintSurfaceEventArgs args)
+        {
+            SKImageInfo info = args.Info;
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint strokePaint = new SKPaint())
+            {
+                strokePaint.Style = SKPaintStyle.Stroke;
+                strokePaint.Color = SKColors.LawnGreen;
+                strokePaint.StrokeCap = SKStrokeCap.Square;
+                strokePaint.StrokeWidth = 1;
+
+                //座標変換
+                canvas.Translate(info.Width / 2f, info.Height / 2f);
+                canvas.Scale(Math.Min(info.Width / 200f, info.Height / 200f));
+
+
+                canvas.DrawCircle(0,-90,9,strokePaint);
+            }
         }
 
 
-        private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        private void OnCanvasViewCompassPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
